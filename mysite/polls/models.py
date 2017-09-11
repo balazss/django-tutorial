@@ -1,8 +1,8 @@
 import datetime
 
 from django.db import models
+from django.db.models import F
 from django.utils import timezone
-
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -22,3 +22,7 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+        
+    def increment_vote(self):
+        self.votes = F('votes') + 1
+        self.save()
